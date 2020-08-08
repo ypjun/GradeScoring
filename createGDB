@@ -1,0 +1,19 @@
+import pandas as pd
+import re
+
+# Class Name
+class_name = 'CT07'
+
+in_file = class_name+'.xls'
+out_file = class_name+'grade.xls'
+gdf = pd.read_excel(in_file)
+
+# make personal secutity id (성적공개시 개인정보 비식별화 목적)
+gdf['sid'] = gdf['휴대폰번호'].apply(lambda x: x[-4:]).astype(int)
+
+# 초기화
+gdf['결석일수'] = 0
+gdf['midterm'] = 0.0
+gdf['final'] = 0.0
+
+gdf.to_excel(out_file, index=False)
